@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+
+# OS & Termux temp files
+.DS_Store
+Thumbs.db
+.tmp*
+*.swp
