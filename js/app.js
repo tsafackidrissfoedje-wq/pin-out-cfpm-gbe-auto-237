@@ -418,7 +418,10 @@
 
     // View pinout click
     const viewBtn = card.querySelector('.btn-view-pinout');
-    viewBtn.addEventListener('click', () => openEcuDetails(ecu));
+    viewBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openEcuDetails(ecu);
+    });
 
     // Card general click
     card.addEventListener('click', (e) => {
@@ -611,7 +614,7 @@
       }
     });
 
-    // Touch events for mobile (Pinch to zoom & Pan)
+    // Schematic Stage Touch Events (Pinch & Pan)
     schematicStage.addEventListener('touchstart', (e) => {
       if (e.touches.length === 1) {
         isDragging = true;
@@ -626,16 +629,18 @@
 
     schematicStage.addEventListener('touchmove', (e) => {
       if (e.touches.length === 1 && isDragging && zoomLevel > 1) {
+        if (e.cancelable) e.preventDefault();
         panX = e.touches[0].clientX - startX;
         panY = e.touches[0].clientY - startY;
         applyTransform();
       } else if (e.touches.length === 2 && initialPinchDistance) {
+        if (e.cancelable) e.preventDefault();
         const currentDistance = getDistance(e.touches[0], e.touches[1]);
         const scaleChange = currentDistance / initialPinchDistance;
         zoomLevel = Math.min(Math.max(0.8, initialZoom * scaleChange), 5);
         applyTransform();
       }
-    }, { passive: true });
+    }, { passive: false });
 
     schematicStage.addEventListener('touchend', () => {
       isDragging = false;
@@ -736,12 +741,14 @@
 
   // --- UTILS & HELPERS ---
   function openModal(modal) {
-    modal.classList.add('active');
+    if (!modal) return;
+    modal.classList.add('active', 'open');
     document.body.style.overflow = 'hidden';
   }
 
   function closeModal(modal) {
-    modal.classList.remove('active');
+    if (!modal) return;
+    modal.classList.remove('active', 'open');
     document.body.style.overflow = '';
   }
 
