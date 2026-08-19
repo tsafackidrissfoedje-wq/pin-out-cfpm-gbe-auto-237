@@ -542,8 +542,9 @@ body {
   padding: 16px;
 }
 
-.modal-backdrop.open {
-  display: flex;
+.modal-backdrop.open,
+.modal-backdrop.active {
+  display: flex !important;
 }
 
 .modal-content {
@@ -678,6 +679,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: none;
   background-image: 
     radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   background-size: 20px 20px;
@@ -694,6 +696,8 @@ body {
   transition: transform 0.05s linear;
   user-select: none;
   -webkit-user-drag: none;
+  touch-action: none;
+  pointer-events: auto;
 }
 
 /* Image Selector Tabs */
@@ -706,27 +710,36 @@ body {
   border-top: 1px solid var(--border-color);
 }
 
-.img-thumb-btn {
-  width: 60px;
-  height: 45px;
-  border-radius: 6px;
-  border: 2px solid transparent;
+.img-thumb-btn, .image-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
   overflow: hidden;
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.7;
   flex-shrink: 0;
-  background: #000;
+  background: rgba(13, 21, 39, 0.9);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
 }
 
-.img-thumb-btn.active, .img-thumb-btn:hover {
+.img-thumb-btn.active, .image-tab.active, .img-thumb-btn:hover, .image-tab:hover {
   border-color: var(--accent-sky);
   opacity: 1;
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+  color: #ffffff;
+  background: rgba(14, 165, 233, 0.15);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
 }
 
-.img-thumb-btn img {
-  width: 100%;
-  height: 100%;
+.img-thumb-btn img, .image-tab img {
+  width: 32px;
+  height: 24px;
+  border-radius: 4px;
   object-fit: cover;
 }
 
