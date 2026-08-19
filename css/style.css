@@ -730,65 +730,28 @@ body {
 }
 
 .schematic-stage {
-  height: 480px;
-  overflow: hidden;
+  width: 100%;
+  min-height: 280px;
+  max-height: 58vh;
+  overflow: auto;
   position: relative;
-  cursor: grab;
   display: flex;
   align-items: center;
   justify-content: center;
-  touch-action: none;
-  background-image: 
-    radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-.schematic-stage:active {
-  cursor: grabbing;
-}
-
-.schematic-loader {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  background: rgba(3, 6, 12, 0.85);
-  z-index: 5;
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.schematic-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(14, 165, 233, 0.2);
-  border-top-color: var(--accent-sky);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
+  background: #02050b;
+  padding: 8px;
 }
 
 .schematic-img {
-  width: auto;
+  width: 100%;
+  max-width: 100%;
   height: auto;
-  max-width: 98%;
-  max-height: 98%;
-  min-height: 180px;
+  max-height: 52vh;
   object-fit: contain;
   display: block;
-  margin: auto;
+  margin: 0 auto;
+  border-radius: 4px;
   transition: transform 0.05s linear;
-  user-select: none;
-  -webkit-user-drag: none;
-  touch-action: none;
-  pointer-events: auto;
 }
 
 /* Image Selector Tabs */
