@@ -218,15 +218,15 @@
     });
 
     // Zoom & Pan controls
-    btnZoomIn.addEventListener('click', () => adjustZoom(0.25));
-    btnZoomOut.addEventListener('click', () => adjustZoom(-0.25));
-    btnResetZoom.addEventListener('click', resetZoom);
-    btnInvertColors.addEventListener('click', toggleInvertColors);
-    btnDownloadImg.addEventListener('click', downloadCurrentSchematic);
-    btnFavModal.addEventListener('click', toggleModalFavorite);
+    if (btnZoomIn) btnZoomIn.addEventListener('click', () => adjustZoom(0.25));
+    if (btnZoomOut) btnZoomOut.addEventListener('click', () => adjustZoom(-0.25));
+    if (btnResetZoom) btnResetZoom.addEventListener('click', resetZoom);
+    if (btnInvertColors) btnInvertColors.addEventListener('click', toggleInvertColors);
+    if (btnDownloadImg) btnDownloadImg.addEventListener('click', downloadCurrentSchematic);
+    if (btnFavModal) btnFavModal.addEventListener('click', toggleModalFavorite);
 
     // Save technician note
-    btnSaveNote.addEventListener('click', saveCurrentTechnicianNote);
+    if (btnSaveNote) btnSaveNote.addEventListener('click', saveCurrentTechnicianNote);
 
     // Schematic Pan & Zoom interactive stage
     setupSchematicInteractivity();
@@ -464,9 +464,9 @@
     if (!ecu) return;
     currentEcu = ecu;
     activeImageIndex = 0;
-
-    // 1. Open modal FIRST so layout engine computes visible container dimensions
-    openModal(detailModal);
+    zoomLevel = 1;
+    panX = 0;
+    panY = 0;
 
     modalEcuTitle.textContent = ecu.name;
 
@@ -479,80 +479,79 @@
       ${(ecu.vehicle_brands || []).map(b => `<span class="badge badge-car">${escapeHtml(b)}</span>`).join('')}
     `;
 
-    // 2. Setup images
-    updateModalImages();
+    // Direct Image Component Setup inside modalSchematicContainer
+    const images = (ecu.images && Array.isArray(ecu.images) && ecu.images.length > 0) ? ecu.images : ['assets/icon-192.png'];
+    const currentImg = images[0];
 
-    // 3. Pinout Table
+    const container = document.getElementById('modalSchematicContainer');
+    if (container) {
+      container.innerHTML = `
+        <div class="schematic-viewer-container">
+          <div class="viewer-toolbar">
+            <div class="toolbar-group">
+              <span style="font-size: 0.82rem; font-weight: 700; color: var(--accent-sky);">📷 Schéma Haute Définition</span>
+            </div>
+            <div class="toolbar-group">
+              <a href="${currentImg}" target="_blank" id="btnOpenDirectImg" class="btn-tool" style="text-decoration: none; color: var(--accent-teal);" title="Ouvrir l'image en pleine résolution">↗️ Plein Écran</a>
+              <button type="button" id="btnDownloadImg" class="btn-tool">💾 Télécharger</button>
+            </div>
+          </div>
+
+          <div class="schematic-stage" id="schematicStage">
+            <img id="modalSchematicImg" class="schematic-img" src="${currentImg}" alt="${escapeHtml(ecu.name)}" onerror="this.src='assets/icon-192.png';">
+          </div>
+
+          ${images.length > 1 ? `
+            <div class="image-selector-tabs" id="imageSelectorTabs">
+              ${images.map((imgSrc, idx) => `
+                <button type="button" class="img-thumb-btn image-tab ${idx === 0 ? 'active' : ''}" data-idx="${idx}">
+                  <img src="${imgSrc}" alt="Vue ${idx + 1}" onerror="this.src='assets/icon-192.png';">
+                  <span>Vue ${idx + 1}</span>
+                </button>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      // Download button
+      const dlBtn = container.querySelector('#btnDownloadImg');
+      if (dlBtn) {
+        dlBtn.addEventListener('click', downloadCurrentSchematic);
+      }
+
+      // Thumbnail selector tabs
+      container.querySelectorAll('.image-tab').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const idx = parseInt(btn.getAttribute('data-idx'), 10);
+          activeImageIndex = idx;
+          const chosen = images[idx];
+          const imgEl = container.querySelector('#modalSchematicImg');
+          const directLink = container.querySelector('#btnOpenDirectImg');
+          if (imgEl) imgEl.src = chosen;
+          if (directLink) directLink.href = chosen;
+          container.querySelectorAll('.image-tab').forEach((b, i) => {
+            b.classList.toggle('active', i === idx);
+          });
+        });
+      });
+    }
+
+    // Pinout Table
     renderPinoutTable(ecu.pinout_table || []);
 
-    // 4. Tech Notes
+    // Tech Notes
     renderTechNotes(ecu);
 
-    // 5. Technician Saved Note
+    // Technician Saved Note
     const savedNote = localStorage.getItem('cfpm_note_' + ecu.id) || '';
     technicianNoteInput.value = savedNote;
 
-    // 6. Favorite button in modal
+    // Favorite button in modal
     updateModalFavButton();
 
-    resetZoom();
-  }
-
-  function updateModalImages() {
-    const btnOpenDirectImg = document.getElementById('btnOpenDirectImg');
-
-    if (!currentEcu || !currentEcu.images || currentEcu.images.length === 0) {
-      modalSchematicImg.src = 'assets/icon-192.png';
-      modalSchematicImg.style.display = 'block';
-      modalSchematicImg.style.opacity = '1';
-      imageSelectorTabs.style.display = 'none';
-      if (btnOpenDirectImg) btnOpenDirectImg.style.display = 'none';
-      return;
-    }
-
-    if (btnOpenDirectImg) btnOpenDirectImg.style.display = 'inline-flex';
-
-    const currentImgSrc = currentEcu.images[activeImageIndex] || currentEcu.images[0];
-    
-    modalSchematicImg.style.display = 'block';
-    modalSchematicImg.style.opacity = '1';
-    modalSchematicImg.src = currentImgSrc;
-
-    modalSchematicImg.onerror = function () {
-      this.src = 'assets/icon-192.png';
-    };
-
-    if (btnOpenDirectImg) {
-      btnOpenDirectImg.href = currentImgSrc;
-    }
-
-    // Render image tabs/thumbnails if more than 1 image
-    if (currentEcu.images.length > 1) {
-      imageSelectorTabs.style.display = 'flex';
-      imageSelectorTabs.innerHTML = '';
-      currentEcu.images.forEach((imgSrc, idx) => {
-        const thumb = document.createElement('button');
-        thumb.type = 'button';
-        thumb.className = `img-thumb-btn image-tab ${idx === activeImageIndex ? 'active' : ''}`;
-        thumb.innerHTML = `
-          <img src="${imgSrc}" alt="Vue ${idx + 1}" onerror="this.src='assets/icon-192.png'">
-          <span>Vue ${idx + 1}</span>
-        `;
-        thumb.addEventListener('click', (ev) => {
-          ev.stopPropagation();
-          activeImageIndex = idx;
-          modalSchematicImg.src = imgSrc;
-          if (btnOpenDirectImg) btnOpenDirectImg.href = imgSrc;
-          resetZoom();
-          document.querySelectorAll('.img-thumb-btn, .image-tab').forEach((t, i) => {
-            t.classList.toggle('active', i === idx);
-          });
-        });
-        imageSelectorTabs.appendChild(thumb);
-      });
-    } else {
-      imageSelectorTabs.style.display = 'none';
-    }
+    openModal(detailModal);
   }
 
   function renderPinoutTable(pinout) {
