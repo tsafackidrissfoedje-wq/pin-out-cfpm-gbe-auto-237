@@ -479,63 +479,55 @@
       ${(ecu.vehicle_brands || []).map(b => `<span class="badge badge-car">${escapeHtml(b)}</span>`).join('')}
     `;
 
-    // Direct Image Component Setup inside modalSchematicContainer
+    // Direct Image Setup
     const images = (ecu.images && Array.isArray(ecu.images) && ecu.images.length > 0) ? ecu.images : ['assets/icon-192.png'];
     const currentImg = images[0];
 
-    const container = document.getElementById('modalSchematicContainer');
-    if (container) {
-      container.innerHTML = `
-        <div class="schematic-viewer-container">
-          <div class="viewer-toolbar">
-            <div class="toolbar-group">
-              <span style="font-size: 0.82rem; font-weight: 700; color: var(--accent-sky);">📷 Schéma Haute Définition</span>
-            </div>
-            <div class="toolbar-group">
-              <a href="${currentImg}" target="_blank" id="btnOpenDirectImg" class="btn-tool" style="text-decoration: none; color: var(--accent-teal);" title="Ouvrir l'image en pleine résolution">↗️ Plein Écran</a>
-              <button type="button" id="btnDownloadImg" class="btn-tool">💾 Télécharger</button>
-            </div>
-          </div>
+    const imgEl = document.getElementById('modalSchematicImg');
+    if (imgEl) {
+      imgEl.src = currentImg;
+      imgEl.alt = `Schéma ${ecu.name}`;
+      imgEl.style.display = 'block';
+      imgEl.style.transform = 'none';
+      imgEl.style.filter = 'none';
+    }
 
-          <div class="schematic-stage" id="schematicStage">
-            <img id="modalSchematicImg" class="schematic-img" src="${currentImg}" alt="${escapeHtml(ecu.name)}" onerror="this.src='assets/icon-192.png';">
-          </div>
+    const directLink = document.getElementById('btnOpenDirectImg');
+    if (directLink) {
+      directLink.href = currentImg;
+    }
 
-          ${images.length > 1 ? `
-            <div class="image-selector-tabs" id="imageSelectorTabs">
-              ${images.map((imgSrc, idx) => `
-                <button type="button" class="img-thumb-btn image-tab ${idx === 0 ? 'active' : ''}" data-idx="${idx}">
-                  <img src="${imgSrc}" alt="Vue ${idx + 1}" onerror="this.src='assets/icon-192.png';">
-                  <span>Vue ${idx + 1}</span>
-                </button>
-              `).join('')}
-            </div>
-          ` : ''}
-        </div>
-      `;
+    const tabsContainer = document.getElementById('imageSelectorTabs');
+    if (tabsContainer) {
+      if (images.length > 1) {
+        tabsContainer.style.display = 'flex';
+        tabsContainer.innerHTML = images.map((imgSrc, idx) => `
+          <button type="button" class="img-thumb-btn image-tab ${idx === 0 ? 'active' : ''}" data-idx="${idx}">
+            <img src="${imgSrc}" alt="Vue ${idx + 1}" onerror="this.src='assets/icon-192.png';">
+            <span>Vue ${idx + 1}</span>
+          </button>
+        `).join('');
 
-      // Download button
-      const dlBtn = container.querySelector('#btnDownloadImg');
-      if (dlBtn) {
-        dlBtn.addEventListener('click', downloadCurrentSchematic);
-      }
-
-      // Thumbnail selector tabs
-      container.querySelectorAll('.image-tab').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const idx = parseInt(btn.getAttribute('data-idx'), 10);
-          activeImageIndex = idx;
-          const chosen = images[idx];
-          const imgEl = container.querySelector('#modalSchematicImg');
-          const directLink = container.querySelector('#btnOpenDirectImg');
-          if (imgEl) imgEl.src = chosen;
-          if (directLink) directLink.href = chosen;
-          container.querySelectorAll('.image-tab').forEach((b, i) => {
-            b.classList.toggle('active', i === idx);
+        tabsContainer.querySelectorAll('.image-tab').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const idx = parseInt(btn.getAttribute('data-idx'), 10);
+            activeImageIndex = idx;
+            const chosen = images[idx];
+            if (imgEl) {
+              imgEl.src = chosen;
+              imgEl.style.transform = 'none';
+            }
+            if (directLink) directLink.href = chosen;
+            tabsContainer.querySelectorAll('.image-tab').forEach((b, i) => {
+              b.classList.toggle('active', i === idx);
+            });
           });
         });
-      });
+      } else {
+        tabsContainer.style.display = 'none';
+        tabsContainer.innerHTML = '';
+      }
     }
 
     // Pinout Table
@@ -545,8 +537,10 @@
     renderTechNotes(ecu);
 
     // Technician Saved Note
-    const savedNote = localStorage.getItem('cfpm_note_' + ecu.id) || '';
-    technicianNoteInput.value = savedNote;
+    if (technicianNoteInput) {
+      const savedNote = localStorage.getItem('cfpm_note_' + ecu.id) || '';
+      technicianNoteInput.value = savedNote;
+    }
 
     // Favorite button in modal
     updateModalFavButton();
@@ -632,19 +626,22 @@
 
   // --- SCHEMATIC STAGE INTERACTION (ZOOM & PAN) ---
   function setupSchematicInteractivity() {
-    schematicStage.addEventListener('wheel', (e) => {
+    const stage = document.getElementById('schematicStage');
+    if (!stage) return;
+
+    stage.addEventListener('wheel', (e) => {
       e.preventDefault();
       const delta = e.deltaY < 0 ? 0.2 : -0.2;
       adjustZoom(delta);
     }, { passive: false });
 
     // Mouse drag
-    schematicStage.addEventListener('mousedown', (e) => {
+    stage.addEventListener('mousedown', (e) => {
       if (zoomLevel > 1) {
         isDragging = true;
         startX = e.clientX - panX;
         startY = e.clientY - panY;
-        schematicStage.style.cursor = 'grabbing';
+        stage.style.cursor = 'grabbing';
       }
     });
 
@@ -659,12 +656,12 @@
     window.addEventListener('mouseup', () => {
       if (isDragging) {
         isDragging = false;
-        schematicStage.style.cursor = zoomLevel > 1 ? 'grab' : 'default';
+        if (stage) stage.style.cursor = zoomLevel > 1 ? 'grab' : 'default';
       }
     });
 
     // Schematic Stage Touch Events (Pinch & Pan)
-    schematicStage.addEventListener('touchstart', (e) => {
+    stage.addEventListener('touchstart', (e) => {
       if (e.touches.length === 1) {
         isDragging = true;
         startX = e.touches[0].clientX - panX;
@@ -676,7 +673,7 @@
       }
     }, { passive: true });
 
-    schematicStage.addEventListener('touchmove', (e) => {
+    stage.addEventListener('touchmove', (e) => {
       if (e.touches.length === 1 && isDragging && zoomLevel > 1) {
         if (e.cancelable) e.preventDefault();
         panX = e.touches[0].clientX - startX;
@@ -691,7 +688,7 @@
       }
     }, { passive: false });
 
-    schematicStage.addEventListener('touchend', () => {
+    stage.addEventListener('touchend', () => {
       isDragging = false;
       initialPinchDistance = null;
     });
@@ -711,24 +708,37 @@
     panX = 0;
     panY = 0;
     isInverted = false;
-    modalSchematicImg.style.filter = 'none';
-    btnInvertColors.classList.remove('active');
+    const imgEl = document.getElementById('modalSchematicImg');
+    if (imgEl) {
+      imgEl.style.filter = 'none';
+    }
+    const btnInvert = document.getElementById('btnInvertColors');
+    if (btnInvert) btnInvert.classList.remove('active');
     applyTransform();
   }
 
   function toggleInvertColors() {
     isInverted = !isInverted;
-    btnInvertColors.classList.toggle('active', isInverted);
-    modalSchematicImg.style.filter = isInverted ? 'invert(1) hue-rotate(180deg) contrast(1.2)' : 'none';
+    const btnInvert = document.getElementById('btnInvertColors');
+    if (btnInvert) btnInvert.classList.toggle('active', isInverted);
+    const imgEl = document.getElementById('modalSchematicImg');
+    if (imgEl) {
+      imgEl.style.filter = isInverted ? 'invert(1) hue-rotate(180deg) contrast(1.2)' : 'none';
+    }
   }
 
   function applyTransform() {
+    const imgEl = document.getElementById('modalSchematicImg');
+    const stage = document.getElementById('schematicStage');
+    if (!imgEl) return;
     if (zoomLevel === 1 && panX === 0 && panY === 0) {
-      modalSchematicImg.style.transform = 'none';
+      imgEl.style.transform = 'none';
     } else {
-      modalSchematicImg.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+      imgEl.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
     }
-    schematicStage.style.cursor = zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default';
+    if (stage) {
+      stage.style.cursor = zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default';
+    }
   }
 
   function downloadCurrentSchematic() {
