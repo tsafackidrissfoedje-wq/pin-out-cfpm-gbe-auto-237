@@ -7471,7 +7471,7 @@
     "fuel_type": "Essence / Petrol",
     "year_range": "2004 - 2022",
     "images": [
-      "assets/images/pcmktm_volvo(ford)_med17.0_tc1767_gpt.jpg"
+      "assets/images/pcmktm_volvoford_med17.0_tc1767_gpt.jpg"
     ],
     "pinout_table": [
       {
@@ -55766,7 +55766,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_651px-Opel_EDC17C18 (1).jpg"
+      "assets/images/bosch_651px-Opel_EDC17C18_1.jpg"
     ],
     "pinout_table": [
       {
@@ -55973,7 +55973,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_546px-Opel_EDC17C19 (1).jpg"
+      "assets/images/bosch_546px-Opel_EDC17C19_1.jpg"
     ],
     "pinout_table": [
       {
@@ -56111,7 +56111,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_385px-BMW_EDC17C41_TYP1_Intern_CAN (1).jpg"
+      "assets/images/bosch_385px-BMW_EDC17C41_TYP1_Intern_CAN_1.jpg"
     ],
     "pinout_table": [
       {
@@ -56318,7 +56318,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_585px-Opel_EDC_17C42 (1).jpg"
+      "assets/images/bosch_585px-Opel_EDC_17C42_1.jpg"
     ],
     "pinout_table": [
       {
@@ -56457,7 +56457,7 @@
     "year_range": "2008 - 2021",
     "images": [
       "assets/images/bosch_590px-VAG_EDC17C46_TC1767_Int_DE.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -56597,7 +56597,7 @@
     "year_range": "2008 - 2021",
     "images": [
       "assets/images/bosch_590px-VAG_EDC17C46_TC1767_Int_DE.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -56805,7 +56805,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_577px-Fiat_EDC_17C49_TC1797_Int_CAN (1).jpg"
+      "assets/images/bosch_577px-Fiat_EDC_17C49_TC1797_Int_CAN_1.jpg"
     ],
     "pinout_table": [
       {
@@ -56944,7 +56944,7 @@
     "year_range": "2008 - 2021",
     "images": [
       "assets/images/bosch_446px-VAG_EDC_17C54_1797_Int_CAN.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -57084,7 +57084,7 @@
     "year_range": "2008 - 2021",
     "images": [
       "assets/images/bosch_446px-VAG_EDC_17C54_1797_Int_CAN.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -57293,7 +57293,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_540px-MB_EDC17CP01_Intern_CAN (1).jpg"
+      "assets/images/bosch_540px-MB_EDC17CP01_Intern_CAN_1.jpg"
     ],
     "pinout_table": [
       {
@@ -57504,7 +57504,7 @@
     "images": [
       "assets/images/bosch_546px-VAG_EDC17CP04_Intern_CAN.jpg",
       "assets/images/bosch_546px-VAG_EDC17CP04_Intern_K-Line.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -57622,7 +57622,7 @@
     "images": [
       "assets/images/bosch_546px-VAG_EDC17CP04_Intern_CAN.jpg",
       "assets/images/bosch_546px-VAG_EDC17CP04_Intern_K-Line.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -57909,7 +57909,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_540px-MB_EDC17CP10_Intern_CAN (1).jpg",
+      "assets/images/bosch_540px-MB_EDC17CP10_Intern_CAN_1.jpg",
       "assets/images/bosch_545px-MB_EDC17CP10_Extern_CAN.jpg"
     ],
     "pinout_table": [
@@ -58211,7 +58211,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_638px-KIA_EDC17CP14_Intern_CAN (1).jpg"
+      "assets/images/bosch_638px-KIA_EDC17CP14_Intern_CAN_1.jpg"
     ],
     "pinout_table": [
       {
@@ -58493,7 +58493,7 @@
       "assets/images/bosch_546px-VAG_EDC17CP14_Extern_CAN.jpg",
       "assets/images/bosch_546px-VAG_EDC17CP14_Extern_K-Line.jpg",
       "assets/images/bosch_546px-VAG_EDC17CP14_Intern_CAN.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -58692,7 +58692,7 @@
     "year_range": "2008 - 2021",
     "images": [
       "assets/images/bosch_546px-VAG_EDC17CP20_Intern_CAN.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -58832,7 +58832,7 @@
     "year_range": "2008 - 2021",
     "images": [
       "assets/images/bosch_546px-VAG_EDC17CP20_Intern_CAN.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -59029,7 +59029,7 @@
     "year_range": "2008 - 2021",
     "images": [
       "assets/images/bosch_619px-VAG_EDC17CP24_1796_Int_Ext_memory.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -59145,7 +59145,7 @@
     "year_range": "2008 - 2021",
     "images": [
       "assets/images/bosch_619px-VAG_EDC17CP24_1796_Int_Ext_memory.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -59444,7 +59444,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_519px-VAG_EDC_17CP44_1797_Int_CAN_DE_Typ1 (1).jpg",
+      "assets/images/bosch_519px-VAG_EDC_17CP44_1797_Int_CAN_DE_Typ1_1.jpg",
       "assets/images/bosch_519px-VAG_EDC_17CP44_1797_Int_CAN_DE_Typ2.jpg"
     ],
     "pinout_table": [
@@ -59584,7 +59584,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_519px-VAG_EDC_17CP44_1797_Int_CAN_DE_Typ1 (1).jpg",
+      "assets/images/bosch_519px-VAG_EDC_17CP44_1797_Int_CAN_DE_Typ1_1.jpg",
       "assets/images/bosch_519px-VAG_EDC_17CP44_1797_Int_CAN_DE_Typ2.jpg"
     ],
     "pinout_table": [
@@ -59781,7 +59781,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_507px-MB_EDC_17CP46_Intern_CAN (1).jpg"
+      "assets/images/bosch_507px-MB_EDC_17CP46_Intern_CAN_1.jpg"
     ],
     "pinout_table": [
       {
@@ -60115,7 +60115,7 @@
     "year_range": "2008 - 2021",
     "images": [
       "assets/images/bosch_546px-VAG_EDC17U01_Intern_CAN.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -60231,7 +60231,7 @@
     "year_range": "2008 - 2021",
     "images": [
       "assets/images/bosch_546px-VAG_EDC17U01_Intern_CAN.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -60346,7 +60346,7 @@
     "year_range": "2008 - 2021",
     "images": [
       "assets/images/bosch_546px-VAG_EDC17U05_Intern_CAN.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -60462,7 +60462,7 @@
     "year_range": "2008 - 2021",
     "images": [
       "assets/images/bosch_546px-VAG_EDC17U05_Intern_CAN.jpg",
-      "assets/images/bosch_800px-VAG_EDC17 (1).jpg"
+      "assets/images/bosch_800px-VAG_EDC17_1.jpg"
     ],
     "pinout_table": [
       {
@@ -61036,7 +61036,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_477px-ME155 (1).jpg"
+      "assets/images/bosch_477px-ME155_1.jpg"
     ],
     "pinout_table": [
       {
@@ -61210,7 +61210,7 @@
       "assets/images/bosch_398px-MB_ME_20_21.jpg",
       "assets/images/bosch_603px-MB_ME_20_21_Platine1.jpg",
       "assets/images/bosch_603px-MB_ME_20_21_Platine2.jpg",
-      "assets/images/bosch_800px-MB_ME2.0 (2).jpg",
+      "assets/images/bosch_800px-MB_ME2.0_2.jpg",
       "assets/images/bosch_800px-MB_ME2.0.jpg"
     ],
     "pinout_table": [
@@ -61271,7 +61271,7 @@
       "assets/images/bosch_398px-MB_ME_20_21.jpg",
       "assets/images/bosch_603px-MB_ME_20_21_Platine1.jpg",
       "assets/images/bosch_603px-MB_ME_20_21_Platine2.jpg",
-      "assets/images/bosch_800px-MB_ME2.0 (1).jpg",
+      "assets/images/bosch_800px-MB_ME2.0_1.jpg",
       "assets/images/bosch_800px-MB_ME2.0.jpg"
     ],
     "pinout_table": [
@@ -61447,7 +61447,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_475px-Fiat_ME21 (1).jpg"
+      "assets/images/bosch_475px-Fiat_ME21_1.jpg"
     ],
     "pinout_table": [
       {
@@ -61680,7 +61680,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_800px-MB_ME2.7 (1).jpg",
+      "assets/images/bosch_800px-MB_ME2.7_1.jpg",
       "assets/images/bosch_800px-MB_ME2.7.jpg",
       "assets/images/bosch_800px-MB_ME_27_Platine.jpg"
     ],
@@ -61740,7 +61740,7 @@
     "year_range": "2008 - 2021",
     "images": [
       "assets/images/bosch_800px-MB_ME2.7.jpg",
-      "assets/images/bosch_800px-MB_ME_27_Platine (1).jpg"
+      "assets/images/bosch_800px-MB_ME_27_Platine_1.jpg"
     ],
     "pinout_table": [
       {
@@ -61797,7 +61797,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_800px-MB_ME2.7 (1).jpg",
+      "assets/images/bosch_800px-MB_ME2.7_1.jpg",
       "assets/images/bosch_800px-MB_ME2.7.jpg",
       "assets/images/bosch_800px-MB_ME_27_Platine.jpg"
     ],
@@ -61857,7 +61857,7 @@
     "year_range": "2008 - 2021",
     "images": [
       "assets/images/bosch_623px-Bosch_ME_272.jpg",
-      "assets/images/bosch_649px-MB_ME_272 (1).jpg",
+      "assets/images/bosch_649px-MB_ME_272_1.jpg",
       "assets/images/bosch_800px-MB_ME2.7.2.jpg"
     ],
     "pinout_table": [
@@ -61917,7 +61917,7 @@
     "images": [
       "assets/images/bosch_623px-Bosch_ME_272.jpg",
       "assets/images/bosch_649px-MB_ME_272.jpg",
-      "assets/images/bosch_800px-MB_ME2.7.2 (1).jpg",
+      "assets/images/bosch_800px-MB_ME2.7.2_1.jpg",
       "assets/images/bosch_800px-MB_ME2.7.2.jpg"
     ],
     "pinout_table": [
@@ -61975,7 +61975,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_800px-MB_ME2.8 (1).jpg",
+      "assets/images/bosch_800px-MB_ME2.8_1.jpg",
       "assets/images/bosch_800px-MB_ME2.8.jpg",
       "assets/images/bosch_800px-MB_ME_28_Platine1.jpg"
     ],
@@ -62034,7 +62034,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_800px-Chrysler_ME2.8.1 (1).jpg",
+      "assets/images/bosch_800px-Chrysler_ME2.8.1_1.jpg",
       "assets/images/bosch_800px-Chrysler_ME_281_Platine.jpg"
     ],
     "pinout_table": [
@@ -62092,7 +62092,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_800px-MB_ME2.8 (2).jpg",
+      "assets/images/bosch_800px-MB_ME2.8_2.jpg",
       "assets/images/bosch_800px-MB_ME2.8.jpg",
       "assets/images/bosch_800px-MB_ME_28_Platine1.jpg"
     ],
@@ -62151,7 +62151,7 @@
     "fuel_type": "Diesel",
     "year_range": "2008 - 2021",
     "images": [
-      "assets/images/bosch_800px-MB_ME2.8 (1).jpg",
+      "assets/images/bosch_800px-MB_ME2.8_1.jpg",
       "assets/images/bosch_800px-MB_ME2.8.jpg",
       "assets/images/bosch_800px-MB_ME_28_Platine1.jpg"
     ],
