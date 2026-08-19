@@ -1,0 +1,119 @@
+name: Build APK & Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "build-and-deploy"
+  cancel-in-progress: true
+
+jobs:
+  build-apk:
+    name: 📱 Build Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Sync Web Application into Android Assets
+        run: |
+          mkdir -p android/app/src/main/assets
+          cp index.html manifest.json sw.js pinouts_database.json android/app/src/main/assets/
+          cp -r css js assets android/app/src/main/assets/
+          echo "Assets synced successfully."
+
+      - name: Build APK with Gradle
+        working-directory: ./android
+        run: |
+          gradle assembleDebug --stacktrace
+
+      - name: Prepare APK Release Artifact
+        run: |
+          mkdir -p release_output
+          APK_PATH=$(find android/app/build/outputs/apk/ -name "*.apk" | head -n 1)
+          if [ -f "$APK_PATH" ]; then
+            cp "$APK_PATH" release_output/PIN_OUT_CFPM_GBE_AUTO_237_v2.0.apk
+            echo "Found APK: $APK_PATH"
+          else
+            echo "APK build failed, checking outputs:"
+            find android/app/build/ -name "*.apk" || true
+            exit 1
+          fi
+
+      - name: Upload APK as Workflow Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PIN_OUT_CFPM_GBE_AUTO_237_APK
+          path: release_output/PIN_OUT_CFPM_GBE_AUTO_237_v2.0.apk
+          if-no-files-found: error
+
+      - name: Create or Update GitHub Release with APK
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/heads/main')
+        with:
+          tag_name: v2.0.0
+          name: "PIN OUT CFPM GBE AUTO 237 v2.0 - APK Officiel"
+          body: |
+            ## ⚡ PIN OUT CFPM GBE AUTO 237 (v2.0.0)
+            
+            Application Android complète et autonome pour techniciens diagnostic automobile, électriciens et reprogrammateurs calculateurs.
+            
+            ### 🌟 Contenu de cette version :
+            - **934+ Calculateurs moteur** (Bosch EDC17/EDC16/ME7/MD1/MG1, Continental SID/PCR2.1, Delphi DCM, Marelli, Denso, ACDelco...).
+            - **1 473 Schémas & Photos HD** de raccordement direct, banc Bench et Bootloader BSL Tricore.
+            - **Moteur de recherche ultra-rapide** par marque, modèle, référence ECU et processeur.
+            - **Visionneuse haute définition** avec zoom 500%, pan tactile et contraste inversé.
+            - **Boîte à outils OBD-II** et calcul de résistances de boot.
+            - **100% Fonctionnel hors-ligne** sans connexion internet requise dans l'atelier !
+            
+            ### 📥 Téléchargement direct :
+            Cliquez sur le fichier ci-dessous pour installer l'application sur votre smartphone ou tablette Android :
+            👉 **`PIN_OUT_CFPM_GBE_AUTO_237_v2.0.apk`**
+          files: release_output/PIN_OUT_CFPM_GBE_AUTO_237_v2.0.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-pages:
+    name: 🌐 Deploy GitHub Pages
+    needs: build-apk
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload Artifact for Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
