@@ -508,6 +508,11 @@
       this.src = 'assets/icon-192.png';
     };
 
+    const btnOpenDirectImg = document.getElementById('btnOpenDirectImg');
+    if (btnOpenDirectImg) {
+      btnOpenDirectImg.href = currentImgSrc;
+    }
+
     // Render image tabs/thumbnails if more than 1 image
     if (currentEcu.images.length > 1) {
       imageSelectorTabs.style.display = 'flex';
@@ -840,8 +845,11 @@
 
   function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js')
-        .then(() => console.log('Service Worker CFPM 237 actif'))
+      navigator.serviceWorker.register('./sw.js?v=2.0.3')
+        .then((reg) => {
+          console.log('Service Worker CFPM 237 v2.0.3 actif');
+          if (reg) reg.update();
+        })
         .catch(err => console.log('SW registration error:', err));
     }
   }
