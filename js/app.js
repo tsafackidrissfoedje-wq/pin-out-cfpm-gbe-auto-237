@@ -496,19 +496,38 @@
   }
 
   function updateModalImages() {
+    const schematicLoader = document.getElementById('schematicLoader');
+    const btnOpenDirectImg = document.getElementById('btnOpenDirectImg');
+
     if (!currentEcu || !currentEcu.images || currentEcu.images.length === 0) {
+      if (schematicLoader) schematicLoader.style.display = 'none';
       modalSchematicImg.src = 'assets/icon-192.png';
+      modalSchematicImg.style.opacity = '1';
       imageSelectorTabs.style.display = 'none';
+      if (btnOpenDirectImg) btnOpenDirectImg.style.display = 'none';
       return;
     }
 
+    if (btnOpenDirectImg) btnOpenDirectImg.style.display = 'inline-flex';
+
     const currentImgSrc = currentEcu.images[activeImageIndex] || currentEcu.images[0];
-    modalSchematicImg.src = currentImgSrc;
-    modalSchematicImg.onerror = function() {
-      this.src = 'assets/icon-192.png';
+    
+    if (schematicLoader) schematicLoader.style.display = 'flex';
+    modalSchematicImg.style.opacity = '0.1';
+
+    modalSchematicImg.onload = function () {
+      if (schematicLoader) schematicLoader.style.display = 'none';
+      modalSchematicImg.style.opacity = '1';
     };
 
-    const btnOpenDirectImg = document.getElementById('btnOpenDirectImg');
+    modalSchematicImg.onerror = function () {
+      if (schematicLoader) schematicLoader.style.display = 'none';
+      this.src = 'assets/icon-192.png';
+      modalSchematicImg.style.opacity = '1';
+    };
+
+    modalSchematicImg.src = currentImgSrc;
+
     if (btnOpenDirectImg) {
       btnOpenDirectImg.href = currentImgSrc;
     }
@@ -528,7 +547,10 @@
         thumb.addEventListener('click', (ev) => {
           ev.stopPropagation();
           activeImageIndex = idx;
+          if (schematicLoader) schematicLoader.style.display = 'flex';
+          modalSchematicImg.style.opacity = '0.1';
           modalSchematicImg.src = imgSrc;
+          if (btnOpenDirectImg) btnOpenDirectImg.href = imgSrc;
           resetZoom();
           document.querySelectorAll('.img-thumb-btn, .image-tab').forEach((t, i) => {
             t.classList.toggle('active', i === idx);
