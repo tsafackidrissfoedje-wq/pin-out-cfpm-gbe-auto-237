@@ -1,22 +1,24 @@
 #!/data/data/com.termux/files/usr/bin/bash
 # =========================================================
-# LANCEUR RAPIDE - PIN OUT CFPM GBE AUTO 237
+# LANCEUR OFFICIEL - PIN OUT CFPM GBE AUTO 237
 # =========================================================
 
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$DIR"
+DIR="/data/data/com.termux/files/home/pin-out-cfpm-gbe-auto-237"
+PORT=8095
+URL="http://127.0.0.1:${PORT}"
 
 echo "========================================================="
-echo "   PIN OUT CFPM GBE AUTO 237 - CALCULATEURS & SCHÉMAS"
+echo "   ⚡ PIN OUT CFPM GBE AUTO 237 - CALCULATEURS & SCHÉMAS ⚡"
 echo "   Base de données technique • 934+ brochages"
 echo "========================================================="
 echo ""
-echo "Démarrage de l'application..."
+echo "Arrêt d'instances précédentes éventuelles..."
+pkill -f "pin-out-cfpm-gbe-auto-237/server.py" 2>/dev/null || true
+sleep 0.5
 
-# Try to open browser in Termux if termux-open-url exists
-if command -v termux-open-url >/dev/null 2>&1; then
-    (sleep 1 && termux-open-url "http://127.0.0.1:8095") &
-fi
+echo "Ouverture de votre navigateur Android..."
+(sleep 1 && (am start -a android.intent.action.VIEW -d "$URL" 2>/dev/null || termux-open-url "$URL" 2>/dev/null || xdg-open "$URL" 2>/dev/null)) &
 
-# Run python server
-python3 "$DIR/server.py"
+echo "Démarrage du serveur local sur le port $PORT..."
+cd "$DIR"
+exec python3 server.py
