@@ -461,9 +461,12 @@
 
   // --- DETAIL MODAL & SCHEMATIC VIEWER ---
   function openEcuDetails(ecu) {
+    if (!ecu) return;
     currentEcu = ecu;
     activeImageIndex = 0;
-    resetZoom();
+
+    // 1. Open modal FIRST so layout engine computes visible container dimensions
+    openModal(detailModal);
 
     modalEcuTitle.textContent = ecu.name;
 
@@ -476,32 +479,31 @@
       ${(ecu.vehicle_brands || []).map(b => `<span class="badge badge-car">${escapeHtml(b)}</span>`).join('')}
     `;
 
-    // Image Setup
+    // 2. Setup images
     updateModalImages();
 
-    // Pinout Table
+    // 3. Pinout Table
     renderPinoutTable(ecu.pinout_table || []);
 
-    // Tech Notes
+    // 4. Tech Notes
     renderTechNotes(ecu);
 
-    // Technician Saved Note
+    // 5. Technician Saved Note
     const savedNote = localStorage.getItem('cfpm_note_' + ecu.id) || '';
     technicianNoteInput.value = savedNote;
 
-    // Favorite button in modal
+    // 6. Favorite button in modal
     updateModalFavButton();
 
-    openModal(detailModal);
+    resetZoom();
   }
 
   function updateModalImages() {
-    const schematicLoader = document.getElementById('schematicLoader');
     const btnOpenDirectImg = document.getElementById('btnOpenDirectImg');
 
     if (!currentEcu || !currentEcu.images || currentEcu.images.length === 0) {
-      if (schematicLoader) schematicLoader.style.display = 'none';
       modalSchematicImg.src = 'assets/icon-192.png';
+      modalSchematicImg.style.display = 'block';
       modalSchematicImg.style.opacity = '1';
       imageSelectorTabs.style.display = 'none';
       if (btnOpenDirectImg) btnOpenDirectImg.style.display = 'none';
@@ -512,21 +514,13 @@
 
     const currentImgSrc = currentEcu.images[activeImageIndex] || currentEcu.images[0];
     
-    if (schematicLoader) schematicLoader.style.display = 'flex';
-    modalSchematicImg.style.opacity = '0.1';
-
-    modalSchematicImg.onload = function () {
-      if (schematicLoader) schematicLoader.style.display = 'none';
-      modalSchematicImg.style.opacity = '1';
-    };
+    modalSchematicImg.style.display = 'block';
+    modalSchematicImg.style.opacity = '1';
+    modalSchematicImg.src = currentImgSrc;
 
     modalSchematicImg.onerror = function () {
-      if (schematicLoader) schematicLoader.style.display = 'none';
       this.src = 'assets/icon-192.png';
-      modalSchematicImg.style.opacity = '1';
     };
-
-    modalSchematicImg.src = currentImgSrc;
 
     if (btnOpenDirectImg) {
       btnOpenDirectImg.href = currentImgSrc;
@@ -547,8 +541,6 @@
         thumb.addEventListener('click', (ev) => {
           ev.stopPropagation();
           activeImageIndex = idx;
-          if (schematicLoader) schematicLoader.style.display = 'flex';
-          modalSchematicImg.style.opacity = '0.1';
           modalSchematicImg.src = imgSrc;
           if (btnOpenDirectImg) btnOpenDirectImg.href = imgSrc;
           resetZoom();
