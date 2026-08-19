@@ -13,8 +13,8 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css?v=2.0.6">
-  <link rel="manifest" href="manifest.json?v=2.0.6">
+  <link rel="stylesheet" href="css/style.css?v=2.0.7">
+  <link rel="manifest" href="manifest.json?v=2.0.7">
   <link rel="icon" type="image/png" href="assets/icon-192.png">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
 </head>
@@ -176,31 +176,8 @@
 
       <div class="modal-body">
         
-        <!-- Schematic Interactive Stage -->
-        <div class="schematic-viewer-container">
-          <div class="viewer-toolbar">
-            <div class="toolbar-group">
-              <button id="btnZoomIn" class="btn-tool">🔍+ Zoom</button>
-              <button id="btnZoomOut" class="btn-tool">🔍- Dézoom</button>
-              <button id="btnResetZoom" class="btn-tool">↺ 100%</button>
-              <button id="btnInvertColors" class="btn-tool">🌓 Contraste Inversé</button>
-            </div>
-            <div class="toolbar-group">
-              <a id="btnOpenDirectImg" href="#" target="_blank" class="btn-tool" style="text-decoration: none; color: var(--accent-teal);" title="Ouvrir l'image originale dans un nouvel onglet">↗️ Plein Écran</a>
-              <button id="btnDownloadImg" class="btn-tool">💾 Enregistrer</button>
-              <button id="btnFavModal" class="btn-tool">⭐ Favori</button>
-            </div>
-          </div>
-
-          <div class="schematic-stage" id="schematicStage">
-            <img id="modalSchematicImg" class="schematic-img" src="assets/icon-192.png" alt="Schéma de brochage">
-          </div>
-
-          <!-- Multiple Images Thumbnail Selector -->
-          <div class="image-selector-tabs" id="imageSelectorTabs" style="display: none;">
-            <!-- Thumbnails inserted dynamically -->
-          </div>
-        </div>
+        <!-- Dynamic Schematic Viewer Container -->
+        <div id="modalSchematicContainer"></div>
 
         <!-- Pinout Table and Technical Notes -->
         <div class="pinout-details-section">
@@ -372,8 +349,8 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="js/data.js?v=2.0.6"></script>
-  <script src="js/app.js?v=2.0.6"></script>
+  <script src="js/data.js?v=2.0.7"></script>
+  <script src="js/app.js?v=2.0.7"></script>
 
 </body>
 </html>
