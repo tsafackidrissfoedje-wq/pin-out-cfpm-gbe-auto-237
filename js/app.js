@@ -230,6 +230,32 @@
 
     // Schematic Pan & Zoom interactive stage
     setupSchematicInteractivity();
+
+    // Delegated click listener for all cards and pinout buttons
+    if (cardsGrid) {
+      cardsGrid.addEventListener('click', (e) => {
+        const favBtn = e.target.closest('.card-fav-btn');
+        if (favBtn) {
+          e.stopPropagation();
+          const favId = favBtn.getAttribute('data-fav-id');
+          if (favId) {
+            toggleFavorite(favId);
+            favBtn.classList.toggle('active', favorites.has(favId));
+            favBtn.textContent = favorites.has(favId) ? '★' : '☆';
+          }
+          return;
+        }
+
+        const card = e.target.closest('.ecu-card');
+        if (card) {
+          const ecuId = card.getAttribute('data-id');
+          const ecu = database.find(item => item.id === ecuId);
+          if (ecu) {
+            openEcuDetails(ecu);
+          }
+        }
+      });
+    }
   }
 
   // --- FILTER & SEARCH ENGINE ---
@@ -470,31 +496,36 @@
   }
 
   function updateModalImages() {
-    if (!currentEcu.images || currentEcu.images.length === 0) {
-      modalSchematicImg.src = 'assets/icon.svg';
+    if (!currentEcu || !currentEcu.images || currentEcu.images.length === 0) {
+      modalSchematicImg.src = 'assets/icon-192.png';
       imageSelectorTabs.style.display = 'none';
       return;
     }
 
     const currentImgSrc = currentEcu.images[activeImageIndex] || currentEcu.images[0];
     modalSchematicImg.src = currentImgSrc;
+    modalSchematicImg.onerror = function() {
+      this.src = 'assets/icon-192.png';
+    };
 
     // Render image tabs/thumbnails if more than 1 image
     if (currentEcu.images.length > 1) {
       imageSelectorTabs.style.display = 'flex';
       imageSelectorTabs.innerHTML = '';
       currentEcu.images.forEach((imgSrc, idx) => {
-        const thumb = document.createElement('div');
-        thumb.className = `image-tab ${idx === activeImageIndex ? 'active' : ''}`;
+        const thumb = document.createElement('button');
+        thumb.type = 'button';
+        thumb.className = `img-thumb-btn image-tab ${idx === activeImageIndex ? 'active' : ''}`;
         thumb.innerHTML = `
-          <img src="${imgSrc}" alt="Vue ${idx + 1}">
+          <img src="${imgSrc}" alt="Vue ${idx + 1}" onerror="this.src='assets/icon-192.png'">
           <span>Vue ${idx + 1}</span>
         `;
-        thumb.addEventListener('click', () => {
+        thumb.addEventListener('click', (ev) => {
+          ev.stopPropagation();
           activeImageIndex = idx;
           modalSchematicImg.src = imgSrc;
           resetZoom();
-          document.querySelectorAll('.image-tab').forEach((t, i) => {
+          document.querySelectorAll('.img-thumb-btn, .image-tab').forEach((t, i) => {
             t.classList.toggle('active', i === idx);
           });
         });
