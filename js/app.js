@@ -724,7 +724,11 @@
   }
 
   function applyTransform() {
-    modalSchematicImg.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+    if (zoomLevel === 1 && panX === 0 && panY === 0) {
+      modalSchematicImg.style.transform = 'none';
+    } else {
+      modalSchematicImg.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+    }
     schematicStage.style.cursor = zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default';
   }
 
