@@ -776,10 +776,15 @@ body {
 }
 
 .schematic-img {
-  max-width: 96%;
-  max-height: 96%;
+  width: auto;
+  height: auto;
+  max-width: 98%;
+  max-height: 98%;
+  min-height: 180px;
   object-fit: contain;
-  transition: transform 0.05s linear, opacity 0.2s ease-in-out;
+  display: block;
+  margin: auto;
+  transition: transform 0.05s linear;
   user-select: none;
   -webkit-user-drag: none;
   touch-action: none;
