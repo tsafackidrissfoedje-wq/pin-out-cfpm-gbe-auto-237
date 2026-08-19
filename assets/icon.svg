@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1329"/>
+      <stop offset="50%" stop-color="#111e38"/>
+      <stop offset="100%" stop-color="#070c18"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#ef4444"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  
+  <!-- Background Card -->
+  <rect width="512" height="512" rx="100" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="6"/>
+  
+  <!-- ECU Circuit Tracks -->
+  <path d="M 60 120 H 160 L 200 160 H 312 L 352 120 H 452" stroke="#1e3a8a" stroke-width="4" fill="none" opacity="0.6"/>
+  <path d="M 60 392 H 160 L 200 352 H 312 L 352 392 H 452" stroke="#1e3a8a" stroke-width="4" fill="none" opacity="0.6"/>
+  <path d="M 120 60 V 160 L 160 200 V 312 L 120 352 V 452" stroke="#1e3a8a" stroke-width="4" fill="none" opacity="0.6"/>
+  <path d="M 392 60 V 160 L 352 200 V 312 L 392 352 V 452" stroke="#1e3a8a" stroke-width="4" fill="none" opacity="0.6"/>
+
+  <!-- ECU Chip Body -->
+  <rect x="136" y="136" width="240" height="240" rx="28" fill="#0f172a" stroke="url(#goldGrad)" stroke-width="6" filter="url(#glow)"/>
+  
+  <!-- Chip Pins -->
+  <g fill="#38bdf8" opacity="0.9">
+    <!-- Top Pins -->
+    <rect x="176" y="112" width="16" height="24" rx="4"/>
+    <rect x="216" y="112" width="16" height="24" rx="4"/>
+    <rect x="256" y="112" width="16" height="24" rx="4"/>
+    <rect x="296" y="112" width="16" height="24" rx="4"/>
+    <rect x="336" y="112" width="16" height="24" rx="4"/>
+    <!-- Bottom Pins -->
+    <rect x="176" y="376" width="16" height="24" rx="4"/>
+    <rect x="216" y="376" width="16" height="24" rx="4"/>
+    <rect x="256" y="376" width="16" height="24" rx="4"/>
+    <rect x="296" y="376" width="16" height="24" rx="4"/>
+    <rect x="336" y="376" width="16" height="24" rx="4"/>
+    <!-- Left Pins -->
+    <rect x="112" y="176" width="24" height="16" rx="4"/>
+    <rect x="112" y="216" width="24" height="16" rx="4"/>
+    <rect x="112" y="256" width="24" height="16" rx="4"/>
+    <rect x="112" y="296" width="24" height="16" rx="4"/>
+    <rect x="112" y="336" width="24" height="16" rx="4"/>
+    <!-- Right Pins -->
+    <rect x="376" y="176" width="24" height="16" rx="4"/>
+    <rect x="376" y="216" width="24" height="16" rx="4"/>
+    <rect x="376" y="256" width="24" height="16" rx="4"/>
+    <rect x="376" y="296" width="24" height="16" rx="4"/>
+    <rect x="376" y="336" width="24" height="16" rx="4"/>
+  </g>
+  
+  <!-- Car & Lightning Icon inside Chip -->
+  <path d="M 196 230 C 196 215 210 200 236 195 L 276 195 C 302 200 316 215 316 230 L 326 245 C 330 250 330 258 326 262 L 320 270 L 320 290 C 320 295 315 300 310 300 H 300 C 295 300 290 295 290 290 V 285 H 222 V 290 C 222 295 217 300 212 300 H 202 C 197 300 192 295 192 290 V 270 L 186 262 C 182 258 182 250 186 245 Z" fill="#1e293b" stroke="#38bdf8" stroke-width="4"/>
+  
+  <!-- Lightning Bolt -->
+  <path d="M 262 165 L 235 240 H 260 L 250 305 L 285 225 H 260 Z" fill="url(#accentGrad)" filter="url(#glow)"/>
+  
+  <!-- Text Label -->
+  <text x="256" y="445" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="28" fill="#f8fafc" text-anchor="middle" letter-spacing="4">PIN OUT 237</text>
+  <text x="256" y="475" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="16" fill="#38bdf8" text-anchor="middle" letter-spacing="2">CFPM GBE AUTO</text>
+</svg>
