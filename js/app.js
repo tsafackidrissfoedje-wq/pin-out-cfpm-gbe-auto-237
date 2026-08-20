@@ -277,6 +277,26 @@
     btnFavModal?.addEventListener('click', toggleModalFavorite);
     btnSaveNote?.addEventListener('click', saveCurrentTechnicianNote);
 
+    const btnForceRefresh = document.getElementById('btnForceRefresh');
+    btnForceRefresh?.addEventListener('click', async () => {
+      showToast('Actualisation complète et purge du cache...');
+      try {
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map(k => caches.delete(k)));
+        }
+        if ('serviceWorker' in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(registrations.map(r => r.unregister()));
+        }
+      } catch (e) {
+        console.warn('Cache purge warning:', e);
+      }
+      setTimeout(() => {
+        window.location.reload(true);
+      }, 400);
+    });
+
     if (cardsGrid) {
       cardsGrid.addEventListener('click', (e) => {
         const favBtn = e.target.closest('.card-fav-btn');
@@ -985,11 +1005,19 @@
 
   function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js?v=2.1.2')
+      navigator.serviceWorker.register('./sw.js?v=2.1.4')
         .then((reg) => {
           if (reg) reg.update();
         })
         .catch(err => console.log('SW registration note:', err));
+
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+          refreshing = true;
+          window.location.reload();
+        }
+      });
     }
   }
 
