@@ -1,19 +1,19 @@
 /**
  * PIN OUT CFPM GBE AUTO 237 - Application Logic
  * Base de données professionnelle de brochages et schémas calculateurs
- * Version 2.1.0 - Moteur HD Lightbox & Visualisation Optimisée
+ * Version 2.1.2 - Moteur HD Lightbox & Chargement Direct Robuste
  */
 
 (function () {
   'use strict';
 
-  // --- SAFE ERROR LOGGING (Non-blocking) ---
+  // --- ERROR LOGGING ---
   window.addEventListener('error', function (event) {
-    console.warn('[CFPM GBE AUTO] Erreur script capturée:', event.message, event.filename, event.lineno);
+    console.error('[CFPM GBE AUTO] Erreur script:', event.message, event.filename, event.lineno, event.error);
   });
 
   window.addEventListener('unhandledrejection', function (event) {
-    console.warn('[CFPM GBE AUTO] Promesse rejetée:', event.reason);
+    console.error('[CFPM GBE AUTO] Promesse rejetée non gérée:', event.reason);
   });
 
   // --- APP STATE ---
@@ -121,7 +121,9 @@
 
   // --- INITIALIZATION ---
   function init() {
+    console.log('[CFPM GBE AUTO] Initialisation v2.1.2...');
     if (!database || database.length === 0) {
+      console.log('[CFPM GBE AUTO] Chargement du fichier JSON de secours...');
       fetch('pinouts_database.json')
         .then(res => res.json())
         .then(data => {
@@ -130,7 +132,7 @@
           setupApp();
         })
         .catch(err => {
-          console.error('Failed to load database JSON:', err);
+          console.error('[CFPM GBE AUTO] Erreur de chargement de la base de données:', err);
           showToast('Erreur de chargement de la base de données', 'error');
         });
     } else {
@@ -141,7 +143,8 @@
   }
 
   function setupApp() {
-    totalCount.textContent = database.length;
+    console.log(`[CFPM GBE AUTO] Base chargée : ${database.length} calculateurs`);
+    if (totalCount) totalCount.textContent = database.length;
     updateFavCounter();
     populateDropdowns();
     setupEventListeners();
@@ -166,34 +169,40 @@
       }
     });
 
-    const sortedBrands = Array.from(brandsSet).sort((a, b) => a.localeCompare(b, 'fr'));
-    sortedBrands.forEach(brand => {
-      const opt = document.createElement('option');
-      opt.value = brand;
-      opt.textContent = brand;
-      filterBrand.appendChild(opt);
-    });
+    if (filterBrand) {
+      const sortedBrands = Array.from(brandsSet).sort((a, b) => a.localeCompare(b, 'fr'));
+      sortedBrands.forEach(brand => {
+        const opt = document.createElement('option');
+        opt.value = brand;
+        opt.textContent = brand;
+        filterBrand.appendChild(opt);
+      });
+    }
 
-    const sortedFamilies = Array.from(familiesSet).sort((a, b) => a.localeCompare(b, 'fr'));
-    sortedFamilies.forEach(family => {
-      const opt = document.createElement('option');
-      opt.value = family;
-      opt.textContent = family;
-      filterFamily.appendChild(opt);
-    });
+    if (filterFamily) {
+      const sortedFamilies = Array.from(familiesSet).sort((a, b) => a.localeCompare(b, 'fr'));
+      sortedFamilies.forEach(family => {
+        const opt = document.createElement('option');
+        opt.value = family;
+        opt.textContent = family;
+        filterFamily.appendChild(opt);
+      });
+    }
   }
 
   // --- EVENT LISTENERS ---
   function setupEventListeners() {
-    searchInput.addEventListener('input', () => {
-      searchClearBtn.style.display = searchInput.value ? 'flex' : 'none';
+    searchInput?.addEventListener('input', () => {
+      if (searchClearBtn) searchClearBtn.style.display = searchInput.value ? 'flex' : 'none';
       applyFilters();
     });
 
-    searchClearBtn.addEventListener('click', () => {
-      searchInput.value = '';
-      searchClearBtn.style.display = 'none';
-      searchInput.focus();
+    searchClearBtn?.addEventListener('click', () => {
+      if (searchInput) {
+        searchInput.value = '';
+        searchInput.focus();
+      }
+      if (searchClearBtn) searchClearBtn.style.display = 'none';
       applyFilters();
     });
 
@@ -204,14 +213,16 @@
     document.querySelectorAll('.quick-pill').forEach(pill => {
       pill.addEventListener('click', () => {
         const query = pill.dataset.search || '';
-        searchInput.value = query;
-        searchClearBtn.style.display = 'flex';
-        applyFilters();
-        searchInput.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (searchInput) {
+          searchInput.value = query;
+          if (searchClearBtn) searchClearBtn.style.display = 'flex';
+          applyFilters();
+          searchInput.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     });
 
-    btnOpenFavorites.addEventListener('click', () => {
+    btnOpenFavorites?.addEventListener('click', () => {
       showOnlyFavorites = !showOnlyFavorites;
       if (showOnlyFavorites) {
         btnOpenFavorites.classList.add('active');
@@ -298,6 +309,8 @@
           const ecu = database.find(item => item.id === ecuId);
           if (ecu) {
             openEcuDetails(ecu);
+          } else {
+            console.error('[CFPM GBE AUTO] Calculateur introuvable pour ID:', ecuId);
           }
         }
       });
@@ -306,15 +319,15 @@
 
   // --- FILTER & SEARCH ENGINE ---
   function applyFilters() {
-    const query = (searchInput.value || '').trim().toLowerCase();
+    const query = (searchInput ? searchInput.value : '').trim().toLowerCase();
     const queryTokens = query ? query.split(/\s+/).filter(Boolean) : [];
 
-    const selectedBrand = filterBrand.value;
-    const selectedEcuBrand = filterEcuBrand.value;
-    const selectedFamily = filterFamily.value;
-    const selectedMode = filterMode.value;
-    const selectedFuel = filterFuel.value;
-    const sortBy = sortOrder.value;
+    const selectedBrand = filterBrand ? filterBrand.value : '';
+    const selectedEcuBrand = filterEcuBrand ? filterEcuBrand.value : '';
+    const selectedFamily = filterFamily ? filterFamily.value : '';
+    const selectedMode = filterMode ? filterMode.value : '';
+    const selectedFuel = filterFuel ? filterFuel.value : '';
+    const sortBy = sortOrder ? sortOrder.value : 'name_asc';
 
     filteredResults = database.filter(item => {
       if (showOnlyFavorites && !favorites.has(item.id)) {
@@ -346,13 +359,13 @@
     sortResults(sortBy);
 
     displayedCount = 0;
-    cardsGrid.innerHTML = '';
-    displayCount.textContent = filteredResults.length;
+    if (cardsGrid) cardsGrid.innerHTML = '';
+    if (displayCount) displayCount.textContent = filteredResults.length;
 
     if (filteredResults.length === 0) {
-      emptyState.style.display = 'block';
+      if (emptyState) emptyState.style.display = 'block';
     } else {
-      emptyState.style.display = 'none';
+      if (emptyState) emptyState.style.display = 'none';
       renderNextChunk();
     }
   }
@@ -375,6 +388,7 @@
 
   // --- CARDS RENDERING ---
   function renderNextChunk() {
+    if (!cardsGrid) return;
     const nextChunk = filteredResults.slice(displayedCount, displayedCount + ITEMS_PER_PAGE);
     if (nextChunk.length === 0) return;
 
@@ -466,56 +480,80 @@
 
   // --- DETAIL MODAL & SCHEMATIC VIEWER ---
   function openEcuDetails(ecu) {
-    if (!ecu) return;
-    currentEcu = ecu;
-    currentImages = (ecu.images && Array.isArray(ecu.images) && ecu.images.length > 0) ? ecu.images : ['assets/icon-192.png'];
-    activeImageIndex = 0;
-
-    modalEcuTitle.textContent = ecu.name;
-
-    modalEcuTags.innerHTML = `
-      <span class="badge badge-brand">${escapeHtml(ecu.ecu_brand || 'ECU')}</span>
-      <span class="badge badge-family">${escapeHtml(ecu.ecu_family || 'Calculateur')}</span>
-      <span class="badge badge-mode">${escapeHtml(ecu.connection_mode || 'Direct Bench')}</span>
-      <span class="badge badge-fuel">${escapeHtml(ecu.fuel_type || 'Diesel/Essence')}</span>
-      ${(ecu.vehicle_brands || []).map(b => `<span class="badge badge-car">${escapeHtml(b)}</span>`).join('')}
-    `;
-
-    loadStageImage(currentImages[0]);
-
-    if (imageSelectorTabs) {
-      if (currentImages.length > 1) {
-        imageSelectorTabs.style.display = 'flex';
-        imageSelectorTabs.innerHTML = currentImages.map((imgSrc, idx) => `
-          <button type="button" class="img-thumb-btn image-tab ${idx === 0 ? 'active' : ''}" data-idx="${idx}">
-            <img src="${imgSrc}" alt="Vue ${idx + 1}" onerror="this.src='assets/icon-192.png';">
-            <span>Vue ${idx + 1}</span>
-          </button>
-        `).join('');
-
-        imageSelectorTabs.querySelectorAll('.image-tab').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const idx = parseInt(btn.getAttribute('data-idx'), 10);
-            selectImageTab(idx);
-          });
-        });
-      } else {
-        imageSelectorTabs.style.display = 'none';
-        imageSelectorTabs.innerHTML = '';
+    try {
+      if (!ecu) {
+        console.error('[CFPM GBE AUTO] openEcuDetails: paramètre ecu invalide');
+        return;
       }
+      console.log('[CFPM GBE AUTO] Ouverture modal pour:', ecu.id, ecu.name);
+
+      currentEcu = ecu;
+      currentImages = (ecu.images && Array.isArray(ecu.images) && ecu.images.length > 0) ? ecu.images : ['assets/icon-192.png'];
+      activeImageIndex = 0;
+
+      // 1. Titre et Tags
+      if (modalEcuTitle) {
+        modalEcuTitle.textContent = ecu.name;
+      }
+
+      if (modalEcuTags) {
+        modalEcuTags.innerHTML = `
+          <span class="badge badge-brand">${escapeHtml(ecu.ecu_brand || 'ECU')}</span>
+          <span class="badge badge-family">${escapeHtml(ecu.ecu_family || 'Calculateur')}</span>
+          <span class="badge badge-mode">${escapeHtml(ecu.connection_mode || 'Direct Bench')}</span>
+          <span class="badge badge-fuel">${escapeHtml(ecu.fuel_type || 'Diesel/Essence')}</span>
+          ${(ecu.vehicle_brands || []).map(b => `<span class="badge badge-car">${escapeHtml(b)}</span>`).join('')}
+        `;
+      }
+
+      // 2. Remplissage immédiat du tableau de brochage
+      renderPinoutTable(ecu.pinout_table || []);
+
+      // 3. Remplissage des notes techniques
+      renderTechNotes(ecu);
+
+      // 4. Chargement de l'image principale
+      loadStageImage(currentImages[0]);
+
+      // 5. Génération des onglets de sélection d'images (si multi-vues)
+      if (imageSelectorTabs) {
+        if (currentImages.length > 1) {
+          imageSelectorTabs.style.display = 'flex';
+          imageSelectorTabs.innerHTML = currentImages.map((imgSrc, idx) => `
+            <button type="button" class="img-thumb-btn image-tab ${idx === 0 ? 'active' : ''}" data-idx="${idx}">
+              <img src="${imgSrc}" alt="Vue ${idx + 1}" onerror="this.src='assets/icon-192.png';">
+              <span>Vue ${idx + 1}</span>
+            </button>
+          `).join('');
+
+          imageSelectorTabs.querySelectorAll('.image-tab').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const idx = parseInt(btn.getAttribute('data-idx'), 10);
+              selectImageTab(idx);
+            });
+          });
+        } else {
+          imageSelectorTabs.style.display = 'none';
+          imageSelectorTabs.innerHTML = '';
+        }
+      }
+
+      // 6. Note personnelle technicien
+      if (technicianNoteInput) {
+        const savedNote = localStorage.getItem('cfpm_note_' + ecu.id) || '';
+        technicianNoteInput.value = savedNote;
+      }
+
+      // 7. Bouton favori
+      updateModalFavButton();
+
+      // 8. Affichage du Modal
+      openModal(detailModal);
+
+    } catch (err) {
+      console.error('[CFPM GBE AUTO] Erreur dans openEcuDetails:', err);
     }
-
-    renderPinoutTable(ecu.pinout_table || []);
-    renderTechNotes(ecu);
-
-    if (technicianNoteInput) {
-      const savedNote = localStorage.getItem('cfpm_note_' + ecu.id) || '';
-      technicianNoteInput.value = savedNote;
-    }
-
-    updateModalFavButton();
-    openModal(detailModal);
   }
 
   function selectImageTab(idx) {
@@ -537,22 +575,33 @@
     if (schematicSpinner) schematicSpinner.style.display = 'flex';
     modalSchematicImg.style.opacity = '0';
 
-    const tempImg = new Image();
-    tempImg.onload = function () {
-      modalSchematicImg.src = src;
-      modalSchematicImg.style.opacity = '1';
+    modalSchematicImg.onload = function () {
+      console.log('[CFPM GBE AUTO] Schéma chargé:', src);
       if (schematicSpinner) schematicSpinner.style.display = 'none';
+      modalSchematicImg.style.opacity = '1';
     };
-    tempImg.onerror = function () {
+
+    modalSchematicImg.onerror = function () {
+      console.warn('[CFPM GBE AUTO] Échec de chargement du schéma:', src);
+      if (schematicSpinner) schematicSpinner.style.display = 'none';
       modalSchematicImg.src = 'assets/icon-192.png';
       modalSchematicImg.style.opacity = '1';
-      if (schematicSpinner) schematicSpinner.style.display = 'none';
-      console.warn('[CFPM GBE AUTO] Image non trouvée:', src);
     };
-    tempImg.src = src;
+
+    modalSchematicImg.src = src;
+
+    // Si déjà dans le cache du navigateur
+    if (modalSchematicImg.complete && modalSchematicImg.naturalWidth > 0) {
+      if (schematicSpinner) schematicSpinner.style.display = 'none';
+      modalSchematicImg.style.opacity = '1';
+    }
   }
 
   function renderPinoutTable(pinout) {
+    if (!modalPinTableBody) {
+      console.error('[CFPM GBE AUTO] Élément modalPinTableBody introuvable !');
+      return;
+    }
     modalPinTableBody.innerHTML = '';
 
     if (!pinout || pinout.length === 0) {
@@ -583,20 +632,25 @@
         </td>
         <td class="pin-desc">${escapeHtml(row.signal || '')}</td>
         <td>
-          <button class="btn-copy-pin" title="Copier la consigne">📋 Copier</button>
+          <button type="button" class="btn-copy-pin" title="Copier la consigne">📋 Copier</button>
         </td>
       `;
 
-      tr.querySelector('.btn-copy-pin').addEventListener('click', () => {
-        const textToCopy = `${currentEcu ? currentEcu.name : 'ECU'} | ${row.pin}: ${row.signal} (${row.wire})`;
-        copyToClipboard(textToCopy);
-      });
+      const copyBtn = tr.querySelector('.btn-copy-pin');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const textToCopy = `${currentEcu ? currentEcu.name : 'ECU'} | ${row.pin}: ${row.signal} (${row.wire})`;
+          copyToClipboard(textToCopy);
+        });
+      }
 
       modalPinTableBody.appendChild(tr);
     });
   }
 
   function renderTechNotes(ecu) {
+    if (!modalTechNotes) return;
     let html = `
       <div class="note-item">
         <strong>⚡ Tension Banc d'Essai :</strong> 13.8V Stabilisé (Consommation : 0.8A - 2.5A).
@@ -824,7 +878,7 @@
     if (!currentEcu) return;
     if (!currentImages || currentImages.length === 0) return;
 
-    lightboxTitle.textContent = currentEcu.name;
+    if (lightboxTitle) lightboxTitle.textContent = currentEcu.name;
     updateLightboxPage();
     loadLightboxImage(currentImages[activeImageIndex]);
 
@@ -847,18 +901,23 @@
     if (lightboxSpinner) lightboxSpinner.style.display = 'flex';
     lightboxImg.style.opacity = '0';
 
-    const temp = new Image();
-    temp.onload = function () {
-      lightboxImg.src = src;
-      lightboxImg.style.opacity = '1';
+    lightboxImg.onload = function () {
       if (lightboxSpinner) lightboxSpinner.style.display = 'none';
+      lightboxImg.style.opacity = '1';
     };
-    temp.onerror = function () {
+
+    lightboxImg.onerror = function () {
+      if (lightboxSpinner) lightboxSpinner.style.display = 'none';
       lightboxImg.src = 'assets/icon-192.png';
       lightboxImg.style.opacity = '1';
-      if (lightboxSpinner) lightboxSpinner.style.display = 'none';
     };
-    temp.src = src;
+
+    lightboxImg.src = src;
+
+    if (lightboxImg.complete && lightboxImg.naturalWidth > 0) {
+      if (lightboxSpinner) lightboxSpinner.style.display = 'none';
+      lightboxImg.style.opacity = '1';
+    }
   }
 
   function updateLightboxPage() {
@@ -1063,7 +1122,7 @@
 
   function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js?v=2.1.0')
+      navigator.serviceWorker.register('./sw.js?v=2.1.2')
         .then((reg) => {
           if (reg) reg.update();
         })

@@ -73,10 +73,10 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
         with:
-          tag_name: v2.1.0
-          name: "PIN OUT CFPM GBE AUTO 237 v2.1.0 - APK Officiel"
+          tag_name: v2.1.2
+          name: "PIN OUT CFPM GBE AUTO 237 v2.1.2 - APK Officiel"
           body: |
-            ## ⚡ PIN OUT CFPM GBE AUTO 237 (v2.1.0)
+            ## ⚡ PIN OUT CFPM GBE AUTO 237 (v2.1.2)
             
             Application Android complète et autonome pour techniciens diagnostic automobile, électriciens et reprogrammateurs calculateurs.
             
