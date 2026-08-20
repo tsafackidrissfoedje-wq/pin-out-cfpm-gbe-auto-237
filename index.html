@@ -177,30 +177,26 @@
       <div class="modal-body">
         
         <!-- Schematic Viewer Container -->
+        <!-- Schematic Direct Display -->
         <div class="schematic-viewer-container">
           <div class="viewer-toolbar">
             <div class="toolbar-group">
-              <button type="button" id="btnZoomIn" class="btn-tool" title="Zoomer">🔍+ Zoom</button>
-              <button type="button" id="btnZoomOut" class="btn-tool" title="Dézoomer">🔍- Dézoom</button>
-              <button type="button" id="btnResetZoom" class="btn-tool" title="Réinitialiser l'affichage">↺ 100%</button>
-              <button type="button" id="btnInvertColors" class="btn-tool" title="Inverser les contrastes">🌓 Contraste</button>
+              <span class="viewer-header-title">📸 Schéma de brochage & raccordement</span>
             </div>
             <div class="toolbar-group">
-              <button type="button" id="btnOpenLightbox" class="btn-tool btn-fullscreen-tool" title="Agrandir en Plein Écran Haute Définition">⛶ Plein Écran HD</button>
-              <button type="button" id="btnDownloadImg" class="btn-tool" title="Télécharger le schéma sur l'appareil">💾 Télécharger</button>
+              <a id="btnOpenFullImg" href="#" target="_blank" class="btn-tool" title="Ouvrir l'image en grand format dans un nouvel onglet">🔍 Ouvrir en grand</a>
+              <button type="button" id="btnDownloadImg" class="btn-tool" title="Télécharger le schéma">💾 Télécharger</button>
               <button type="button" id="btnFavModal" class="btn-tool" title="Ajouter aux favoris">⭐ Favori</button>
             </div>
           </div>
 
-          <div class="schematic-stage" id="schematicStage" title="Cliquez pour agrandir en plein écran HD" style="border: 5px solid red !important; background-color: yellow !important; min-height: 200px !important;">
-            <div id="schematicSpinner" class="schematic-spinner" style="display: none;">
-              <div class="spinner-ring"></div>
-              <span>Chargement du schéma HD...</span>
-            </div>
-            <img id="modalSchematicImg" class="schematic-img" src="assets/icon-192.png" alt="Schéma de brochage">
-            <div class="stage-click-hint"><span>🔍 Touchez pour agrandir en plein écran</span></div>
+          <div class="schematic-stage" id="schematicStage">
+            <a id="modalSchematicLink" href="#" target="_blank" title="Cliquez pour ouvrir l'image en taille réelle">
+              <img id="modalSchematicImg" class="schematic-img" src="assets/icon-192.png" alt="Schéma de brochage" loading="eager">
+            </a>
           </div>
 
+          <!-- Multiple Images Thumbnail Selector -->
           <div class="image-selector-tabs" id="imageSelectorTabs" style="display: none;">
             <!-- Thumbnails inserted dynamically -->
           </div>

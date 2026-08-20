@@ -274,20 +274,9 @@
       }
     });
 
-    btnZoomIn?.addEventListener('click', () => adjustStageZoom(0.3));
-    btnZoomOut?.addEventListener('click', () => adjustStageZoom(-0.3));
-    btnResetZoom?.addEventListener('click', resetStageZoom);
-    btnInvertColors?.addEventListener('click', toggleStageInvert);
-    btnOpenLightbox?.addEventListener('click', openLightbox);
     btnDownloadImg?.addEventListener('click', downloadCurrentSchematic);
     btnFavModal?.addEventListener('click', toggleModalFavorite);
-
     btnSaveNote?.addEventListener('click', saveCurrentTechnicianNote);
-
-    schematicStage?.addEventListener('click', (e) => {
-      if (stageIsDragging) return;
-      openLightbox();
-    });
 
     if (cardsGrid) {
       cardsGrid.addEventListener('click', (e) => {
@@ -570,30 +559,18 @@
 
   function loadStageImage(src) {
     if (!modalSchematicImg) return;
-    resetStageZoom();
+    const finalSrc = src || 'assets/icon-192.png';
+    modalSchematicImg.src = finalSrc;
+    modalSchematicImg.style.opacity = '1';
 
-    if (schematicSpinner) schematicSpinner.style.display = 'flex';
-    modalSchematicImg.style.opacity = '0';
+    const modalSchematicLink = document.getElementById('modalSchematicLink');
+    if (modalSchematicLink) {
+      modalSchematicLink.href = finalSrc;
+    }
 
-    modalSchematicImg.onload = function () {
-      console.log('[CFPM GBE AUTO] Schéma chargé:', src);
-      if (schematicSpinner) schematicSpinner.style.display = 'none';
-      modalSchematicImg.style.opacity = '1';
-    };
-
-    modalSchematicImg.onerror = function () {
-      console.warn('[CFPM GBE AUTO] Échec de chargement du schéma:', src);
-      if (schematicSpinner) schematicSpinner.style.display = 'none';
-      modalSchematicImg.src = 'assets/icon-192.png';
-      modalSchematicImg.style.opacity = '1';
-    };
-
-    modalSchematicImg.src = src;
-
-    // Si déjà dans le cache du navigateur
-    if (modalSchematicImg.complete && modalSchematicImg.naturalWidth > 0) {
-      if (schematicSpinner) schematicSpinner.style.display = 'none';
-      modalSchematicImg.style.opacity = '1';
+    const btnOpenFullImg = document.getElementById('btnOpenFullImg');
+    if (btnOpenFullImg) {
+      btnOpenFullImg.href = finalSrc;
     }
   }
 
@@ -682,110 +659,9 @@
     modalTechNotes.innerHTML = html;
   }
 
-  // --- STAGE PAN & ZOOM (Modal Viewer) ---
+  // --- STAGE DISPLAY (Direct Viewer) ---
   function setupSchematicInteractivity() {
-    if (!schematicStage) return;
-
-    schematicStage.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      const delta = e.deltaY < 0 ? 0.2 : -0.2;
-      adjustStageZoom(delta);
-    }, { passive: false });
-
-    schematicStage.addEventListener('mousedown', (e) => {
-      if (stageZoom > 1) {
-        stageIsDragging = true;
-        stageStartX = e.clientX - stagePanX;
-        stageStartY = e.clientY - stagePanY;
-        schematicStage.style.cursor = 'grabbing';
-      }
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (stageIsDragging) {
-        stagePanX = e.clientX - stageStartX;
-        stagePanY = e.clientY - stageStartY;
-        applyStageTransform();
-      }
-    });
-
-    window.addEventListener('mouseup', () => {
-      if (stageIsDragging) {
-        stageIsDragging = false;
-        if (schematicStage) schematicStage.style.cursor = stageZoom > 1 ? 'grab' : 'zoom-in';
-      }
-    });
-
-    schematicStage.addEventListener('touchstart', (e) => {
-      if (e.touches.length === 1) {
-        if (stageZoom > 1) {
-          stageIsDragging = true;
-          stageStartX = e.touches[0].clientX - stagePanX;
-          stageStartY = e.touches[0].clientY - stagePanY;
-        }
-      } else if (e.touches.length === 2) {
-        stageIsDragging = false;
-        stagePinchDist = getDistance(e.touches[0], e.touches[1]);
-        stageInitialZoom = stageZoom;
-      }
-    }, { passive: true });
-
-    schematicStage.addEventListener('touchmove', (e) => {
-      if (e.touches.length === 1 && stageIsDragging && stageZoom > 1) {
-        if (e.cancelable) e.preventDefault();
-        stagePanX = e.touches[0].clientX - stageStartX;
-        stagePanY = e.touches[0].clientY - stageStartY;
-        applyStageTransform();
-      } else if (e.touches.length === 2 && stagePinchDist) {
-        if (e.cancelable) e.preventDefault();
-        const dist = getDistance(e.touches[0], e.touches[1]);
-        const scaleChange = dist / stagePinchDist;
-        stageZoom = Math.min(Math.max(0.8, stageInitialZoom * scaleChange), 4);
-        applyStageTransform();
-      }
-    }, { passive: false });
-
-    schematicStage.addEventListener('touchend', () => {
-      stageIsDragging = false;
-      stagePinchDist = null;
-    });
-  }
-
-  function adjustStageZoom(amount) {
-    stageZoom = Math.min(Math.max(0.5, stageZoom + amount), 4);
-    applyStageTransform();
-  }
-
-  function resetStageZoom() {
-    stageZoom = 1;
-    stagePanX = 0;
-    stagePanY = 0;
-    stageIsInverted = false;
-    btnInvertColors?.classList.remove('active');
-    if (modalSchematicImg) {
-      modalSchematicImg.style.filter = 'none';
-    }
-    applyStageTransform();
-  }
-
-  function toggleStageInvert() {
-    stageIsInverted = !stageIsInverted;
-    btnInvertColors?.classList.toggle('active', stageIsInverted);
-    if (modalSchematicImg) {
-      modalSchematicImg.style.filter = stageIsInverted ? 'invert(1) hue-rotate(180deg) contrast(1.2)' : 'none';
-    }
-  }
-
-  function applyStageTransform() {
-    if (!modalSchematicImg) return;
-    if (stageZoom === 1 && stagePanX === 0 && stagePanY === 0) {
-      modalSchematicImg.style.transform = 'none';
-    } else {
-      modalSchematicImg.style.transform = `translate(${stagePanX}px, ${stagePanY}px) scale(${stageZoom})`;
-    }
-    if (schematicStage) {
-      schematicStage.style.cursor = stageZoom > 1 ? (stageIsDragging ? 'grabbing' : 'grab') : 'zoom-in';
-    }
+    // Direct and simple display mode - no canvas hijacking
   }
 
   // --- FULLSCREEN HD LIGHTBOX VIEWER ---
