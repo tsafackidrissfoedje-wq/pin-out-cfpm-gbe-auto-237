@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pinout-237-v2.2.0';
+const CACHE_NAME = 'pinout-237-v2.1.4-simple';
 const STATIC_ASSETS = [
   './',
   './index.html',

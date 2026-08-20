@@ -75,7 +75,6 @@
   const modalEcuTags = document.getElementById('modalEcuTags');
   const modalSchematicImg = document.getElementById('modalSchematicImg');
   const schematicStage = document.getElementById('schematicStage');
-  const schematicSpinner = document.getElementById('schematicSpinner');
   const imageSelectorTabs = document.getElementById('imageSelectorTabs');
   const modalPinTableBody = document.getElementById('modalPinTableBody');
   const modalTechNotes = document.getElementById('modalTechNotes');
@@ -559,19 +558,7 @@
 
   function loadStageImage(src) {
     if (!modalSchematicImg) return;
-    const finalSrc = src || 'assets/icon-192.png';
-    modalSchematicImg.src = finalSrc;
-    modalSchematicImg.style.opacity = '1';
-
-    const modalSchematicLink = document.getElementById('modalSchematicLink');
-    if (modalSchematicLink) {
-      modalSchematicLink.href = finalSrc;
-    }
-
-    const btnOpenFullImg = document.getElementById('btnOpenFullImg');
-    if (btnOpenFullImg) {
-      btnOpenFullImg.href = finalSrc;
-    }
+    modalSchematicImg.src = src;
   }
 
   function renderPinoutTable(pinout) {
