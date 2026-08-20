@@ -42,8 +42,8 @@ def get_local_ip():
 
 def start_server():
     os.chdir(DIRECTORY)
-    socketserver.TCPServer.allow_reuse_address = True
-    with socketserver.TCPServer(("", PORT), PinoutHttpHandler) as httpd:
+    http.server.ThreadingHTTPServer.allow_reuse_address = True
+    with http.server.ThreadingHTTPServer(("", PORT), PinoutHttpHandler) as httpd:
         local_ip = get_local_ip()
         print("=" * 68)
         print("  ⚡ PIN OUT CFPM GBE AUTO 237 - BASE DE DONNÉES CALCULATEURS PRO ⚡")

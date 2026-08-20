@@ -52,9 +52,9 @@ class MainActivity : AppCompatActivity() {
         settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         settings.loadWithOverviewMode = true
         settings.useWideViewPort = true
-        settings.builtInZoomControls = false
+        settings.builtInZoomControls = true
         settings.displayZoomControls = false
-        settings.setSupportZoom(false)
+        settings.setSupportZoom(true)
         settings.cacheMode = WebSettings.LOAD_DEFAULT
 
         webView.webViewClient = object : WebViewClient() {

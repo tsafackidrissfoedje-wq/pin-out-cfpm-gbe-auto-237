@@ -13,8 +13,8 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css?v=2.0.8">
-  <link rel="manifest" href="manifest.json?v=2.0.8">
+  <link rel="stylesheet" href="css/style.css?v=2.1.0">
+  <link rel="manifest" href="manifest.json?v=2.1.0">
   <link rel="icon" type="image/png" href="assets/icon-192.png">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
 </head>
@@ -180,16 +180,25 @@
         <div class="schematic-viewer-container">
           <div class="viewer-toolbar">
             <div class="toolbar-group">
-              <span style="font-size: 0.82rem; font-weight: 700; color: var(--accent-sky);">📷 Schéma Haute Définition</span>
+              <button type="button" id="btnZoomIn" class="btn-tool" title="Zoomer">🔍+ Zoom</button>
+              <button type="button" id="btnZoomOut" class="btn-tool" title="Dézoomer">🔍- Dézoom</button>
+              <button type="button" id="btnResetZoom" class="btn-tool" title="Réinitialiser l'affichage">↺ 100%</button>
+              <button type="button" id="btnInvertColors" class="btn-tool" title="Inverser les contrastes">🌓 Contraste</button>
             </div>
             <div class="toolbar-group">
-              <a href="#" target="_blank" id="btnOpenDirectImg" class="btn-tool" style="text-decoration: none; color: var(--accent-teal);" title="Ouvrir l'image en pleine résolution">↗️ Plein Écran</a>
-              <button type="button" id="btnDownloadImg" class="btn-tool">💾 Télécharger</button>
+              <button type="button" id="btnOpenLightbox" class="btn-tool btn-fullscreen-tool" title="Agrandir en Plein Écran Haute Définition">⛶ Plein Écran HD</button>
+              <button type="button" id="btnDownloadImg" class="btn-tool" title="Télécharger le schéma sur l'appareil">💾 Télécharger</button>
+              <button type="button" id="btnFavModal" class="btn-tool" title="Ajouter aux favoris">⭐ Favori</button>
             </div>
           </div>
 
-          <div class="schematic-stage" id="schematicStage">
-            <img id="modalSchematicImg" class="schematic-img" src="assets/icon-192.png" alt="Schéma de brochage" onerror="this.src='assets/icon-192.png';">
+          <div class="schematic-stage" id="schematicStage" title="Cliquez pour agrandir en plein écran HD">
+            <div id="schematicSpinner" class="schematic-spinner" style="display: none;">
+              <div class="spinner-ring"></div>
+              <span>Chargement du schéma HD...</span>
+            </div>
+            <img id="modalSchematicImg" class="schematic-img" src="assets/icon-192.png" alt="Schéma de brochage">
+            <div class="stage-click-hint"><span>🔍 Touchez pour agrandir en plein écran</span></div>
           </div>
 
           <div class="image-selector-tabs" id="imageSelectorTabs" style="display: none;">
@@ -246,6 +255,38 @@
 
       </div>
     </div>
+  </div>
+
+  <!-- Fullscreen HD Lightbox Modal -->
+  <div id="lightboxModal" class="lightbox-modal">
+    <div class="lightbox-top-bar">
+      <div class="lightbox-title-group">
+        <span class="lightbox-badge">⚡ HD LIGHTBOX</span>
+        <h3 id="lightboxTitle">Schéma Haute Définition</h3>
+        <span id="lightboxPageIndicator" class="lightbox-page-indicator">Vue 1 / 1</span>
+      </div>
+      <div class="lightbox-actions">
+        <button id="btnLightboxRotate" class="lightbox-btn" title="Pivoter de 90°">🔄 Rotation</button>
+        <button id="btnLightboxInvert" class="lightbox-btn" title="Mode Contraste / Inversé">🌓 Contraste</button>
+        <button id="btnLightboxZoomOut" class="lightbox-btn" title="Dézoomer">🔍-</button>
+        <span id="lightboxZoomLevel" class="lightbox-zoom-val">100%</span>
+        <button id="btnLightboxZoomIn" class="lightbox-btn" title="Zoomer">🔍+</button>
+        <button id="btnLightboxReset" class="lightbox-btn" title="Réinitialiser">↺ 100%</button>
+        <button id="btnLightboxDownload" class="lightbox-btn" title="Télécharger l'image">💾</button>
+        <button id="btnLightboxClose" class="lightbox-btn lightbox-close-btn" title="Fermer (Échap)">✕</button>
+      </div>
+    </div>
+    <div class="lightbox-stage" id="lightboxStage">
+      <div id="lightboxSpinner" class="schematic-spinner" style="display: none;">
+        <div class="spinner-ring"></div>
+        <span>Chargement haute résolution...</span>
+      </div>
+      <img id="lightboxImg" class="lightbox-img" src="assets/icon-192.png" alt="Schéma HD">
+    </div>
+    <!-- Previous / Next Navigation Arrows -->
+    <button id="btnLightboxPrev" class="lightbox-nav-btn prev" title="Vue précédente (←)">❮</button>
+    <button id="btnLightboxNext" class="lightbox-nav-btn next" title="Vue suivante (→)">❯</button>
+    <div class="lightbox-hint">💡 Double-cliquez pour zoomer &bull; Glissez pour naviguer &bull; Touches ← / → pour changer de vue</div>
   </div>
 
   <!-- Workshop Tools Modal -->
@@ -367,8 +408,8 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="js/data.js?v=2.0.8"></script>
-  <script src="js/app.js?v=2.0.8"></script>
+  <script src="js/data.js?v=2.1.0"></script>
+  <script src="js/app.js?v=2.1.0"></script>
 
 </body>
 </html>

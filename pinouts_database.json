@@ -237,7 +237,10 @@
     "connection_mode": "Module 71 (Bench Sans Ouverture)",
     "fuel_type": "Diesel / Essence",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/pcmktm_kess-plastic.jpg",
+      "assets/images/pcmktm_scanmatik-boot.jpg"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -442,7 +445,10 @@
     "connection_mode": "Module 71 (Bench Sans Ouverture)",
     "fuel_type": "Essence / Petrol",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/pcmktm_med17.1.10_irom_tc1793_egpt_vag.png",
+      "assets/images/hexportal_BOSCH_MED17.1.png"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -5544,7 +5550,10 @@
     "connection_mode": "Module 71 (Bench Sans Ouverture)",
     "fuel_type": "Essence / Petrol",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/pcmktm_bosch_me17.5.6_irom_tc1767_gpt_vag.png",
+      "assets/images/hexportal_BOSCH_ME17.png"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -10025,7 +10034,10 @@
     "connection_mode": "Module 71 (Bench Sans Ouverture)",
     "fuel_type": "Diesel",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/hexportal_BOSCH_MEDC17.png",
+      "assets/images/pcmktm__edc17cp46_irom_tc1797_egpt_mercedes.png"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -10206,7 +10218,10 @@
     "connection_mode": "Module 71 (Bench Sans Ouverture)",
     "fuel_type": "Diesel / Essence",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/hexportal_KEFICO_MEG17.9.12.png",
+      "assets/images/pinout_dm_drex_meg17_9_12_irom_tc1762_custom_3.png"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -10377,7 +10392,10 @@
     "connection_mode": "Module 71 (Bench Sans Ouverture)",
     "fuel_type": "Diesel / Essence",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/hexportal_BOSCH_MEDV174_IROM_TC1766_EGPT_PSA.png",
+      "assets/images/pcmktm_psa-mev17.4.2.jpg"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -10778,7 +10796,10 @@
     "connection_mode": "Module 71 (Bench Sans Ouverture)",
     "fuel_type": "Essence / Petrol",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/hexportal_BOSCH_MEVD17.png",
+      "assets/images/pcmktm_bosch_mevd1728_irom_tc1797_egpt_bmw.png"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -11691,7 +11712,10 @@
     "connection_mode": "Module 71 (Bench Sans Ouverture)",
     "fuel_type": "Diesel",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/hexportal_BOSCH_EDC17C46_IROM_TC1767_EGPT_VAG.png",
+      "assets/images/pcmktm_edc17c10_irom_tc1797_egpt_psa.png"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -12035,7 +12059,10 @@
     "connection_mode": "Bootloader BSL (Tricore Boot)",
     "fuel_type": "Diesel",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/pcmktm_scanmatik2-diy.jpg",
+      "assets/images/pcmktm_scanmatik-boot.jpg"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -25220,7 +25247,10 @@
     "connection_mode": "Brochage Direct / Banc",
     "fuel_type": "Diesel",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/hexportal_edc16c39_opel.jpg",
+      "assets/images/hexportal_OPELEDC16CP33.jpg"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -26301,7 +26331,11 @@
     "connection_mode": "Bootloader BSL (Tricore Boot)",
     "fuel_type": "Diesel",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/hexportal_EDC17C19IROMTC1792.png",
+      "assets/images/pcmktm_edc17c19_irom_tc1792_egpt_opel.png",
+      "assets/images/bsl_drex_edc17_c19_irom_tc1792_custom.png"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -28562,7 +28596,7 @@
     "fuel_type": "Diesel",
     "year_range": "2004 - 2022",
     "images": [
-      "assets/images/hexportal_EDC17CP07IROMTC1766HW2011+.png"
+      "assets/images/hexportal_EDC17CP07IROMTC1766HW2011_PLUS.png"
     ],
     "pinout_table": [
       {
@@ -28954,7 +28988,11 @@
     "connection_mode": "Bootloader BSL (Tricore Boot)",
     "fuel_type": "Diesel",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/hexportal_EDC17CP14TC1796V.png",
+      "assets/images/pcmktm_edc17cp14_irom_tc1796_egpt_hyundai_kia.png",
+      "assets/images/bsl_drex_edc17_cp14_irom_tc1796_custom.png"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -31769,7 +31807,10 @@
     "connection_mode": "Brochage Direct / Banc",
     "fuel_type": "Essence / Petrol",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/hexportal_BOSCH_ME17.3.0_TC1724_EGPT_FAL.png",
+      "assets/images/bsl_drex_me17_3_0_irom_tc1724_custom_2.png"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -37016,7 +37057,10 @@
     "connection_mode": "Brochage Direct / Banc",
     "fuel_type": "Diesel",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/hexportal_BOSCH_EDC17C74_IROM_TC1793_EGPT_VAG.png",
+      "assets/images/bsl_drex_edc17_c74_irom_tc1793_gpt_custom_zoom118.png"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -44010,7 +44054,10 @@
     "connection_mode": "Brochage Direct / Banc",
     "fuel_type": "Diesel",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/pcmktm_scanmatik-boot.jpg",
+      "assets/images/pcmktm_ktag-gpt-cable.jpg"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -47168,7 +47215,10 @@
     "connection_mode": "Brochage Direct / Banc",
     "fuel_type": "Diesel",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/hexportal_EDC17CP44TC1797.png",
+      "assets/images/bsl_drex_edc17_cp44_irom_tc1797_custom_type2.jpg"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -51420,7 +51470,10 @@
     "connection_mode": "Brochage Direct / Banc",
     "fuel_type": "Essence / Petrol",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/pcmktm_me17.9.71_irom_tc1724_egpt_psa.png",
+      "assets/images/bsl_drex_me17_9_7_irom_tc1762_custom.png"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -51487,7 +51540,10 @@
     "connection_mode": "Brochage Direct / Banc",
     "fuel_type": "Essence / Petrol",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/pinout_dm_drex_bosch_me7_4_4_custom.png",
+      "assets/images/pinout_dm_drex_bosch_me7_4_4_custom_2.png"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -51542,7 +51598,10 @@
     "connection_mode": "Brochage Direct / Banc",
     "fuel_type": "Diesel / Essence",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/pcmktm_scanmatik-boot.jpg",
+      "assets/images/pcmktm_kess-plastic.jpg"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -53743,7 +53802,10 @@
     "connection_mode": "Brochage Direct / Banc",
     "fuel_type": "Essence / Petrol",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/hexportal_BOSCH_MED17.1.png",
+      "assets/images/pcmktm_med17.1.10_irom_tc1793_egpt_vag.png"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
@@ -54638,7 +54700,10 @@
     "connection_mode": "Brochage Direct / Banc",
     "fuel_type": "Diesel",
     "year_range": "2004 - 2022",
-    "images": [],
+    "images": [
+      "assets/images/hexportal_SID807EVO.jpg",
+      "assets/images/bsl_drex_sid807_irom_tc1797_custom.png"
+    ],
     "pinout_table": [
       {
         "pin": "VCC / +12V",
